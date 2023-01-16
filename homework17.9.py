@@ -1,5 +1,6 @@
 numbers = input("Введите список чисел через пробел: ")
 number = int(input("Введите любое число: "))
+is_sort = False
 
 # Проверяем корректно-ли введены данные.
 try:
@@ -31,6 +32,7 @@ print("Отсортированный список чисел: ", numbers)
 print("И его тип:", type(numbers))
 print()
 
+
 # Бинарный алгоритм поиска
 def binary_search(array, element, left, right):
     global is_sort
@@ -47,11 +49,10 @@ def binary_search(array, element, left, right):
         return binary_search(array, element, middle + 1, right)
 
 
-
 # Проверяем что бы введенное число не было последним в списке.
 try:
     numpos = (binary_search(numbers, number, 0, len(numbers)))
-    if is_sort == False:
+    if not is_sort:
         print("Введенное вами число отсутствует в списке.")
         raise IndexError
     if numbers[numpos] == numbers[-1]:
@@ -64,11 +65,9 @@ except IndexError:
     print("Введенное вами число не соответствует условиям, попробуйте снова.")
     raise
 
-
 # Находим числа слева и справа от указанного.
-num1 = (binary_search(numbers, numbers[numpos-1], 0, len(numbers)))
-num2 = (binary_search(numbers, numbers[numpos+1], 0, len(numbers)))
-
+num1 = (binary_search(numbers, numbers[numpos - 1], 0, len(numbers)))
+num2 = (binary_search(numbers, numbers[numpos + 1], 0, len(numbers)))
 
 # Эта конструкция будет сдвигать результат влево, если введенное число и число, стоящее слева от него - одинаковые.
 # Она нужна если указано число, которое повторяется в списке несколько раз.
@@ -78,7 +77,6 @@ while numbers[num1] == numbers[numpos]:
 
 # Если все введено корректно, то мы получаем номера позиций чисел.
 print("Номер номер позиции элемента, который меньше введенного вами числа: ", num1,
-    "\nЧисло равно: ", numbers[num1])
+      "\nЧисло равно: ", numbers[num1])
 print("Номер номер позиции элемента, который больше или равен введенному вами числу: ", num2,
-    "\nЧисло равно: ", numbers[num2])
-
+      "\nЧисло равно: ", numbers[num2])
