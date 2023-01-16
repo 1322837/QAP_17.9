@@ -33,11 +33,13 @@ print()
 
 # Бинарный алгоритм поиска
 def binary_search(array, element, left, right):
+    global is_sort
     if left > right:
-        print("Введенное вами число отсутствует в списке.")
+        is_sort = False
         return False
     middle = (right + left) // 2
     if array[middle] == element:
+        is_sort = True
         return middle
     elif element < array[middle]:
         return binary_search(array, element, left, middle - 1)
@@ -45,9 +47,13 @@ def binary_search(array, element, left, right):
         return binary_search(array, element, middle + 1, right)
 
 
+
 # Проверяем что бы введенное число не было последним в списке.
 try:
     numpos = (binary_search(numbers, number, 0, len(numbers)))
+    if is_sort == False:
+        print("Введенное вами число отсутствует в списке.")
+        raise IndexError
     if numbers[numpos] == numbers[-1]:
         print("Введенное вами число - последнее в списке.")
         raise IndexError
@@ -63,20 +69,16 @@ except IndexError:
 num1 = (binary_search(numbers, numbers[numpos-1], 0, len(numbers)))
 num2 = (binary_search(numbers, numbers[numpos+1], 0, len(numbers)))
 
+
+# Эта конструкция будет сдвигать результат влево, если введенное число и число, стоящее слева от него - одинаковые.
+# Она нужна если указано число, которое повторяется в списке несколько раз.
+while numbers[num1] == numbers[numpos]:
+    num1 = num1 - 1
+    num2 = num2 - 1
+
 # Если все введено корректно, то мы получаем номера позиций чисел.
-if numbers[num1] != numbers[num1-1]:
-    print("Номер номер позиции элемента, который меньше введенного вами числа: ", num1,
+print("Номер номер позиции элемента, который меньше введенного вами числа: ", num1,
     "\nЧисло равно: ", numbers[num1])
-    print("Номер номер позиции элемента, который больше или равен введенному вами числу: ", num2,
+print("Номер номер позиции элемента, который больше или равен введенному вами числу: ", num2,
     "\nЧисло равно: ", numbers[num2])
 
-# Данная конструкция нужна если указанное нами число повторяется в списке несколько раз,
-# она идет по списку пока не найдет число, идущее до него.
-else:
-    for i in numbers:
-        while numbers[num1] == numbers[num1-1]:
-            num1 = num1-1
-    print("Номер номер позиции числа, которое меньше введенного вами числа: ", num1-1,
-          "\nЧисло равно: ", numbers[num1-1])
-    print("Номер номер позиции числа, которое больше или равно введенному вами числу: ", num1+1,
-          "\nЧисло равно: ", numbers[num1+1])
